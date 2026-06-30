@@ -1,0 +1,12 @@
+import { cpSync, mkdirSync, writeFileSync, rmSync } from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+const runtime=globalThis.process||{env:{}};
+const env=runtime.env||{};
+if(!env.SUPABASE_URL||!env.SUPABASE_ANON_KEY)throw new Error('Faltan SUPABASE_URL y SUPABASE_ANON_KEY');
+const root=path.dirname(fileURLToPath(import.meta.url));
+const output=path.join(root,'dist');
+rmSync(output,{recursive:true,force:true});
+mkdirSync(output,{recursive:true});
+cpSync(path.join(root,'outputs'),output,{recursive:true});
+writeFileSync(path.join(output,'config.js'),'window.CLARIO_CONFIG='+JSON.stringify({mode:'supabase',supabaseUrl:env.SUPABASE_URL,supabaseAnonKey:env.SUPABASE_ANON_KEY})+';\n');

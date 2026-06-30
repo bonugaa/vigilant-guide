@@ -1,0 +1,17 @@
+{
+  "name": "Clario Finanzas",
+  "short_name": "Clario",
+  "description": "Control de ventas, gastos e impuestos",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f3f5f2",
+  "theme_color": "#111714",
+  "icons": [
+    {
+      "src": "app-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
