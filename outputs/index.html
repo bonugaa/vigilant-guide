@@ -84,7 +84,7 @@
       </section>
 
       <section class="view" id="ventas">
-        <div class="page-toolbar"><div class="segmented"><button class="active">Todas</button><button>Pendientes</button><button>Completadas</button></div><div class="toolbar-actions"><button class="secondary-button" id="sale-model-button">▣ Modelos</button><button class="primary-button" data-open-drawer="sale">＋ Nueva venta</button></div></div>
+        <div class="page-toolbar"><div class="segmented" id="sale-status-filter"><button class="active" data-sale-filter="all">Todas</button><button data-sale-filter="pending">Pendientes</button><button data-sale-filter="completed">Completadas</button></div><div class="toolbar-actions"><button class="secondary-button" id="sale-model-button">▣ Modelos</button><button class="primary-button" data-open-drawer="sale">＋ Nueva venta</button></div></div>
         <div class="metric-grid">
           <article class="metric"><span>Cobrado este mes</span><strong id="sales-net-metric">0,00 €</strong><small>Beneficio real tras IRPF</small></article>
           <article class="metric"><span>Pendiente de cobro</span><strong>1.612,50 €</strong><small>2 pagos próximos</small></article>
