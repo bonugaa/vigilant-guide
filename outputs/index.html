@@ -73,7 +73,7 @@
             <div id="movement-list" class="movement-list"></div>
           </section>
           <section class="content-panel spending-panel">
-            <div class="section-heading"><div><p class="eyebrow">Este mes</p><h3>En qué gastas</h3></div><button class="icon-button" title="Más opciones">···</button></div>
+            <div class="section-heading"><div><p class="eyebrow">Este mes</p><h3>En qué gastas</h3></div><button class="icon-button" data-view="estadisticas" title="Abrir estadísticas" aria-label="Abrir estadísticas">▥</button></div>
             <div class="donut-layout"><div class="donut" id="spending-donut"><div><strong id="donut-total">0 €</strong><span>Total</span></div></div><div id="category-legend" class="legend"></div></div>
           </section>
         </div>
@@ -98,7 +98,7 @@
         <div class="page-toolbar"><div class="segmented" id="expense-type-filter"><button class="active" data-type="all">Todos</button><button data-type="business">Negocio</button><button data-type="personal">Personal</button></div><div class="toolbar-actions"><button class="secondary-button" id="budget-button">▤ Presupuestos</button><button class="primary-button" data-open-drawer="expense">＋ Nuevo gasto</button></div></div>
         <div class="metric-grid"><article class="metric"><span>Gastos del mes</span><strong id="expenses-metric">0,00 €</strong><small>Confirmados</small></article><article class="metric"><span>Negocio</span><strong id="business-expenses">0,00 €</strong><small>Herramientas y servicios</small></article><article class="metric"><span>Personal</span><strong id="personal-expenses">0,00 €</strong><small>Consumo personal</small></article><article class="metric warning" id="budget-alert-metric"><span id="budget-alert-label">Presupuestos</span><strong id="budget-alert-name">Sin límites</strong><small id="budget-alert-detail">Configura tus límites mensuales</small></article></div>
         <section class="recurring-band"><div><span class="recurring-icon">↻</span><div><strong>Adobe Creative Cloud · 66,55 €</strong><p>Gasto recurrente previsto para hoy</p></div></div><div><button class="secondary-button" id="skip-recurring">Omitir</button><button class="primary-button" id="confirm-recurring">Confirmar pago</button></div></section>
-        <section class="content-panel table-panel"><div class="section-heading"><div><p class="eyebrow">Movimientos</p><h3>Todos los gastos</h3></div><button class="secondary-button">⌁ Filtrar</button></div><div class="data-table" id="expenses-table"></div></section>
+        <section class="content-panel table-panel"><div class="section-heading"><div><p class="eyebrow">Movimientos</p><h3>Todos los gastos</h3></div><button class="secondary-button" id="expense-advanced-filter">⌁ Filtrar</button></div><div class="data-table" id="expenses-table"></div></section>
       </section>
 
       <section class="view" id="impuestos">
