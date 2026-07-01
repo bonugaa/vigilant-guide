@@ -26,7 +26,7 @@
   function renderOffline(){authContent.innerHTML='<h1>Clario necesita iniciarse</h1><p class="auth-copy">La interfaz está bien, pero para guardar tus datos debe estar funcionando la aplicación privada.</p><div class="auth-offline"><strong>Haz doble clic en INICIAR_CLARIO.cmd</strong><br>Está en la carpeta principal de Clario. Se abrirá automáticamente en tu navegador.</div>';}
   async function boot(){try{var session=await api('/api/session',{headers:{}});if(session.authenticated)return enterApp(session.user);session.needsSetup?renderSetup():renderLogin();}catch(error){renderOffline();}}
   async function enterApp(user){activeUser=user||null;authScreen.hidden=true;appShell.hidden=false;var profile=document.querySelector('.profile-mini div');if(profile&&user){profile.innerHTML='<strong>'+safe(user.name)+'</strong><small>Propietario</small>';}set('security-email',user&&user.email?user.email:'Tu cuenta de acceso');var mini=document.querySelector('.profile-mini');if(mini&&!mini.querySelector('.connection-badge'))mini.insertAdjacentHTML('beforeend','<span class="connection-badge">Datos protegidos</span>');await loadDashboard();}
-  async function loadDashboard(){try{state=await api('/api/dashboard');renderAll();}catch(error){if(error.status===401){appShell.hidden=true;authScreen.hidden=false;renderLogin();}else notify('No se pudieron cargar los datos.');}}
+  async function loadDashboard(){try{state=await api('/api/dashboard');renderAll();window.dispatchEvent(new CustomEvent('clario:dashboard',{detail:state}));}catch(error){if(error.status===401){appShell.hidden=true;authScreen.hidden=false;renderLogin();}else notify('No se pudieron cargar los datos.');}}
 
   function renderRealLabels(){
     var t=state.totals||{};
@@ -85,5 +85,6 @@
   document.getElementById('mobile-menu-backdrop').addEventListener('click',function(){setMobileMenu(false);});
   document.getElementById('main-sidebar').addEventListener('click',function(event){if(event.target.closest('[data-view]'))setMobileMenu(false);});
   document.addEventListener('keydown',function(event){if(event.key==='Escape')setMobileMenu(false);});
+  window.CLARIO_APP={reload:loadDashboard,notify:notify,openDrawer:openCustomDrawer,closeDrawer:closeDrawer,getState:function(){return state;}};
   boot();
 })();
