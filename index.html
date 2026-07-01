@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#111714">
+  <title>Clario | Tu dinero, claro</title>
+  <meta name="description" content="Prototipo de control financiero para profesionales independientes.">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="auth-screen" id="auth-screen">
+    <div class="auth-panel">
+      <div class="auth-brand"><span class="brand-mark">C</span><strong>Clario</strong></div>
+      <div id="auth-content"><p class="auth-loading">Preparando tu espacio privado...</p></div>
+    </div>
+  </div>
+  <div class="app-shell" id="app-shell" hidden>
+    <aside class="sidebar" id="main-sidebar">
+      <button class="icon-button mobile-menu-close" id="mobile-menu-close" aria-label="Cerrar menú">×</button>
+      <a class="brand" href="#" data-view="inicio" aria-label="Clario, ir al inicio">
+        <span class="brand-mark">C</span><span>Clario</span>
+      </a>
+      <nav class="main-nav" aria-label="Navegación principal">
+        <button class="nav-item active" data-view="inicio"><span class="nav-icon">⌂</span><span>Inicio</span></button>
+        <button class="nav-item" data-view="ventas"><span class="nav-icon">↗</span><span>Ventas</span></button>
+        <button class="nav-item" data-view="gastos"><span class="nav-icon">↙</span><span>Gastos</span></button>
+        <button class="nav-item" data-view="impuestos"><span class="nav-icon">%</span><span>Impuestos</span></button>
+        <button class="nav-item" data-view="estadisticas"><span class="nav-icon">▥</span><span>Estadísticas</span></button>
+        <button class="nav-item" data-view="clientes"><span class="nav-icon">◎</span><span>Clientes</span></button>
+        <button class="nav-item" data-view="objetivos"><span class="nav-icon">◇</span><span>Objetivos</span></button>
+      </nav>
+      <div class="sidebar-bottom">
+        <button class="nav-item" data-view="ajustes"><span class="nav-icon">⚙</span><span>Ajustes</span></button>
+        <div class="profile-mini"><span class="avatar">BM</span><div><strong>Bosco</strong><small>Propietario</small></div><button class="icon-button" title="Opciones">···</button></div>
+      </div>
+    </aside>
+    <div class="mobile-menu-backdrop" id="mobile-menu-backdrop"></div>
+
+    <main class="main">
+      <header class="topbar">
+        <button class="icon-button mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Abrir menú">☰</button>
+        <div class="topbar-copy"><p class="eyebrow" id="eyebrow">Lunes, 30 de junio</p><h1 id="page-title">Buenos días, Bosco</h1></div>
+        <div class="top-actions">
+          <button class="icon-button" id="theme-toggle" title="Cambiar tema" aria-label="Cambiar tema">◐</button>
+          <button class="icon-button notification-button" id="notification-toggle" title="Notificaciones" aria-label="Notificaciones">♢<span class="notification-dot"></span></button>
+          <button class="primary-button" data-open-drawer="sale"><span>＋</span>Nueva venta</button>
+        </div>
+      </header>
+
+      <section class="view active" id="inicio">
+        <div class="balance-panel">
+          <div class="balance-copy"><span class="status-pill"><i></i> Dinero real confirmado</span><p>Dinero disponible</p><h2 id="available-balance">0,00 €</h2><div class="balance-change">↑ 18,4% frente al mes pasado</div></div>
+          <div class="balance-actions"><button class="light-button" data-open-drawer="expense"><span>−</span> Añadir gasto</button><button class="light-button" data-open-drawer="sale"><span>＋</span> Registrar venta</button></div>
+          <div class="balance-breakdown">
+            <div><span>Beneficio cobrado</span><strong id="income-total">0,00 €</strong></div>
+            <div><span>Gastos confirmados</span><strong id="expense-total">0,00 €</strong></div>
+            <div><span>Pagos por cobrar</span><strong>1.612,50 €</strong><small>No incluidos en el saldo</small></div>
+          </div>
+        </div>
+
+        <div class="summary-strip">
+          <button class="summary-item" data-view="impuestos"><span class="summary-icon vat">IVA</span><span><small>IVA pendiente</small><strong id="vat-total">0,00 €</strong></span><span>›</span></button>
+          <button class="summary-item" data-view="impuestos"><span class="summary-icon irpf">IRPF</span><span><small>IRPF acumulado</small><strong id="irpf-total">0,00 €</strong></span><span>›</span></button>
+          <button class="summary-item" data-view="objetivos"><span class="summary-icon goal">◇</span><span><small>Objetivo del mes</small><strong>72% completado</strong></span><span>›</span></button>
+        </div>
+
+        <div class="dashboard-grid">
+          <section class="content-panel movements-panel">
+            <div class="section-heading"><div><p class="eyebrow">Actividad</p><h3>Movimientos recientes</h3></div><button class="text-button" data-view="ventas">Ver todos</button></div>
+            <div class="filter-tabs" role="tablist"><button class="active" data-movement-filter="all">Todos</button><button data-movement-filter="business">Negocio</button><button data-movement-filter="personal">Personal</button></div>
+            <div id="movement-list" class="movement-list"></div>
+          </section>
+          <section class="content-panel spending-panel">
+            <div class="section-heading"><div><p class="eyebrow">Este mes</p><h3>En qué gastas</h3></div><button class="icon-button" title="Más opciones">···</button></div>
+            <div class="donut-layout"><div class="donut" id="spending-donut"><div><strong id="donut-total">0 €</strong><span>Total</span></div></div><div id="category-legend" class="legend"></div></div>
+          </section>
+        </div>
+        <div class="dashboard-grid lower-grid">
+          <section class="content-panel chart-panel"><div class="section-heading"><div><p class="eyebrow">Evolución</p><h3>Beneficio disponible</h3></div><select aria-label="Periodo"><option>Últimos 6 meses</option><option>Este año</option></select></div><div class="bar-chart" id="home-chart"></div></section>
+          <section class="insight-panel"><span class="insight-label">Lectura rápida</span><h3>Vas por buen camino</h3><p>Este mes tienes un 24% más disponible y tus gastos personales han bajado.</p><button class="light-button" data-view="estadisticas">Ver análisis</button></section>
+        </div>
+      </section>
+
+      <section class="view" id="ventas">
+        <div class="page-toolbar"><div class="segmented" id="sale-status-filter"><button class="active" data-sale-filter="all">Todas</button><button data-sale-filter="pending">Pendientes</button><button data-sale-filter="completed">Completadas</button></div><div class="toolbar-actions"><button class="secondary-button" id="sale-model-button">▣ Modelos</button><button class="primary-button" data-open-drawer="sale">＋ Nueva venta</button></div></div>
+        <div class="metric-grid">
+          <article class="metric"><span>Cobrado este mes</span><strong id="sales-net-metric">0,00 €</strong><small>Beneficio real tras IRPF</small></article>
+          <article class="metric"><span>Pendiente de cobro</span><strong>1.612,50 €</strong><small>2 pagos próximos</small></article>
+          <article class="metric"><span>Ventas completadas</span><strong>7</strong><small>+2 frente a mayo</small></article>
+          <article class="metric"><span>Ticket medio</span><strong>846,00 €</strong><small>Base sin IVA</small></article>
+        </div>
+        <section class="content-panel table-panel"><div class="section-heading"><div><p class="eyebrow">Junio 2026</p><h3>Ventas y pagos</h3></div><div class="search-box">⌕ <input id="sale-search" placeholder="Buscar cliente o venta" aria-label="Buscar venta"></div></div><div class="data-table" id="sales-table"></div></section>
+      </section>
+
+      <section class="view" id="gastos">
+        <div class="page-toolbar"><div class="segmented" id="expense-type-filter"><button class="active" data-type="all">Todos</button><button data-type="business">Negocio</button><button data-type="personal">Personal</button></div><div class="toolbar-actions"><button class="secondary-button" id="budget-button">▤ Presupuestos</button><button class="primary-button" data-open-drawer="expense">＋ Nuevo gasto</button></div></div>
+        <div class="metric-grid"><article class="metric"><span>Gastos del mes</span><strong id="expenses-metric">0,00 €</strong><small>Confirmados</small></article><article class="metric"><span>Negocio</span><strong id="business-expenses">0,00 €</strong><small>Herramientas y servicios</small></article><article class="metric"><span>Personal</span><strong id="personal-expenses">0,00 €</strong><small>Consumo personal</small></article><article class="metric warning" id="budget-alert-metric"><span id="budget-alert-label">Presupuestos</span><strong id="budget-alert-name">Sin límites</strong><small id="budget-alert-detail">Configura tus límites mensuales</small></article></div>
+        <section class="recurring-band"><div><span class="recurring-icon">↻</span><div><strong>Adobe Creative Cloud · 66,55 €</strong><p>Gasto recurrente previsto para hoy</p></div></div><div><button class="secondary-button" id="skip-recurring">Omitir</button><button class="primary-button" id="confirm-recurring">Confirmar pago</button></div></section>
+        <section class="content-panel table-panel"><div class="section-heading"><div><p class="eyebrow">Movimientos</p><h3>Todos los gastos</h3></div><button class="secondary-button">⌁ Filtrar</button></div><div class="data-table" id="expenses-table"></div></section>
+      </section>
+
+      <section class="view" id="impuestos">
+        <div class="tax-hero"><div><p class="eyebrow">Segundo trimestre · Solo pagos cobrados</p><h2>Impuestos bajo control</h2><p>Los importes se calculan proporcionalmente con cada pago confirmado.</p></div><button class="secondary-button" id="tax-export-button">▣ Exportar resumen</button></div>
+        <div class="tax-grid"><article class="tax-card vat-card"><span>IVA pendiente</span><strong id="tax-vat-card">0,00 €</strong><p>21% repercutido en cobros reales</p><div class="progress"><i style="width:68%"></i></div><small>Próxima liquidación: 20 de julio</small></article><article class="tax-card irpf-card"><span>IRPF acumulado</span><strong id="tax-irpf-card">0,00 €</strong><p>9% aplicado a las ventas</p><div class="progress"><i style="width:42%"></i></div><small>Separado del dinero disponible</small></article></div>
+        <div class="tax-tables"><section class="content-panel table-panel"><div class="section-heading"><div><p class="eyebrow">Detalle</p><h3>IVA por venta</h3></div></div><div class="data-table" id="vat-table"></div></section><section class="content-panel table-panel"><div class="section-heading"><div><p class="eyebrow">Detalle</p><h3>IRPF por venta</h3></div></div><div class="data-table" id="irpf-table"></div></section></div>
+      </section>
+
+      <section class="view" id="estadisticas">
+        <div class="page-toolbar stats-toolbar"><div class="segmented" id="stats-period"><button data-stats-period="daily">Diario</button><button data-stats-period="weekly">Semanal</button><button class="active" data-stats-period="monthly">Mensual</button><button data-stats-period="annual">Anual</button></div><button class="date-range" id="stats-date-range">Este mes</button></div>
+        <div class="metric-grid"><article class="metric positive"><span>Beneficio disponible</span><strong>5.962,42 €</strong><small>↑ 18,4% en el periodo</small></article><article class="metric"><span>Ingresos netos</span><strong>8.340,00 €</strong><small>Solo cobros reales</small></article><article class="metric"><span>Gastos</span><strong>2.377,58 €</strong><small>28,5% de los ingresos</small></article><article class="metric"><span>Mejor mes</span><strong>Junio</strong><small>3.426,55 € disponibles</small></article></div>
+        <div class="stats-grid"><section class="content-panel chart-panel wide"><div class="section-heading"><div><p class="eyebrow">Comparativa</p><h3>Ingresos y gastos</h3></div><select id="stats-scope"><option value="all">Todo</option><option value="business">Negocio</option><option value="personal">Personal</option></select></div><div class="grouped-chart" id="stats-chart"></div></section><section class="content-panel spending-panel"><div class="section-heading"><div><p class="eyebrow">Distribución</p><h3>Gastos por categoría</h3></div></div><div class="donut-layout vertical"><div class="donut large" id="stats-donut"><div><strong>1.218 €</strong><span>Periodo</span></div></div><div class="legend" id="stats-legend"></div></div></section></div>
+        <section class="content-panel"><div class="section-heading"><div><p class="eyebrow">Patrones detectados</p><h3>Lo importante de este periodo</h3></div></div><div class="insight-list"><div><span class="trend-icon up">↑</span><div><strong>Más ventas cobradas</strong><p>Has cobrado un 22% más que en el periodo anterior.</p></div></div><div><span class="trend-icon down">↓</span><div><strong>Menos gasto personal</strong><p>La categoría personal ha bajado 116,40 €.</p></div></div><div><span class="trend-icon alert">!</span><div><strong>Límite de ropa cerca</strong><p>Te quedan 28,00 € para alcanzar el presupuesto mensual.</p></div></div></div></section>
+      </section>
+
+      <section class="view" id="clientes">
+        <div class="page-toolbar"><div class="search-box large">⌕ <input id="client-search" placeholder="Buscar por nombre, email o NIF" aria-label="Buscar cliente"></div><button class="primary-button" id="new-client-button">＋ Nuevo cliente</button></div>
+        <div class="client-grid" id="client-grid"></div>
+      </section>
+
+      <section class="view" id="objetivos">
+        <div class="page-toolbar"><div><p class="eyebrow">Tu progreso</p><h2 class="view-title">Objetivos financieros</h2></div><button class="primary-button" id="new-goal-button">＋ Crear objetivo</button></div>
+        <div class="goal-feature"><div><span class="goal-kicker">Objetivo principal</span><h2>Fondo para equipo profesional</h2><p>Un nuevo portátil y cámara para elevar la calidad de tus proyectos.</p><div class="goal-progress"><i style="width:64%"></i></div><div class="goal-numbers"><strong>1.920 € de 3.000 €</strong><span>64%</span></div></div><div class="goal-ring"><span>64%</span></div></div>
+        <div class="section-heading goal-heading"><div><p class="eyebrow">Sugerencias inteligentes</p><h3>Objetivos que encajan contigo</h3></div><span class="muted">Tú decides cuáles añadir</span></div>
+        <div class="recommendation-grid" id="monthly-recommendations"><article class="recommendation"><span class="term short">Corto plazo</span><h3>Reserva para impuestos</h3><p>Aparta 1.800 € antes del próximo trimestre.</p><div><strong>150 €/semana</strong><button class="secondary-button goal-accept">Añadir</button></div></article><article class="recommendation"><span class="term medium">Medio plazo</span><h3>6 meses de suscripciones</h3><p>Cubre tus herramientas aunque bajen las ventas.</p><div><strong>720 €</strong><button class="secondary-button goal-accept">Añadir</button></div></article><article class="recommendation"><span class="term long">Largo plazo</span><h3>Colchón profesional</h3><p>Acumula tres meses de gastos de negocio.</p><div><strong>4.500 €</strong><button class="secondary-button goal-accept">Añadir</button></div></article></div>
+      </section>
+
+      <section class="view" id="ajustes">
+        <div class="settings-layout"><nav class="settings-nav"><button class="active" data-settings="cuenta">Cuenta</button><button data-settings="equipo">Equipo y permisos</button><button data-settings="categorias">Categorías</button><button data-settings="exportar">Exportar datos</button><button data-settings="seguridad">Seguridad</button></nav><div class="settings-content">
+          <section class="settings-section active" data-settings-panel="cuenta"><div class="settings-heading"><div><p class="eyebrow">Preferencias</p><h2>Tu cuenta</h2></div></div><div class="setting-row"><div><strong>Apariencia</strong><p>Elige cómo quieres ver Clario.</p></div><div class="segmented"><button data-theme="light">Claro</button><button data-theme="dark">Oscuro</button><button class="active" data-theme="system">Sistema</button></div></div><div class="setting-row"><div><strong>Notificaciones</strong><p>Pagos, límites, impuestos y gastos recurrentes.</p></div><label class="switch"><input id="notification-enabled" type="checkbox" checked><span></span></label></div><div class="setting-row"><div><strong>Instalar en el móvil</strong><p>Usa Clario como una app desde tu pantalla de inicio.</p></div><button class="secondary-button" id="install-button">Instalar app</button></div></section>
+          <section class="settings-section" data-settings-panel="equipo"><div class="settings-heading"><div><p class="eyebrow">Colaboración</p><h2>Equipo y permisos</h2></div><button class="primary-button" id="invite-button">＋ Invitar miembro</button></div><div class="owner-banner"><span class="avatar">BM</span><div><strong>Bosco · Propietario</strong><p>Control total. Nadie puede ocultarte movimientos ni eliminar tu acceso.</p></div><span class="status-pill">Propietario</span></div><div class="member-row"><span class="avatar coral">LM</span><div><strong>Lucía Martín</strong><p>lucia@ejemplo.es</p></div><select><option>Solo ver</option><option>Puede editar</option></select><button class="icon-button">···</button></div><div class="privacy-box"><strong>Privacidad por movimiento</strong><p>Al crear ventas o gastos puedes ocultarlos a miembros concretos. El propietario siempre los verá.</p><label class="switch"><input type="checkbox" checked><span></span></label></div></section>
+          <section class="settings-section" data-settings-panel="categorias"><div class="settings-heading"><div><p class="eyebrow">Organización</p><h2>Categorías y subcategorías</h2></div><button class="primary-button">＋ Añadir categoría</button></div><div class="category-editor"><div><strong>Negocio</strong><p>Suscripciones, Fotografía, Impresión QR, Equipamiento, Marketing, Otros</p></div><button class="secondary-button">Editar</button></div><div class="category-editor"><div><strong>Personal</strong><p>Comida, Ropa, Deporte, Zapatillas, Ocio y lujos, Transporte, Otros</p></div><button class="secondary-button">Editar</button></div></section>
+          <section class="settings-section" data-settings-panel="exportar"><div class="settings-heading"><div><p class="eyebrow">Excel</p><h2>Exportar tus datos</h2></div></div><div class="export-options"><label><input type="checkbox" data-export-section="sales" checked> Ventas y pagos</label><label><input type="checkbox" data-export-section="expenses" checked> Gastos</label><label><input type="checkbox" data-export-section="taxes" checked> IVA e IRPF</label><label><input type="checkbox" data-export-section="clients"> Clientes</label><label><input type="checkbox" data-export-section="goals"> Objetivos</label></div><div class="setting-row"><div><strong>Rango de fechas</strong><p>El archivo incluirá fórmulas y resúmenes automáticos.</p></div><select id="export-range"><option value="quarter">Este trimestre</option><option value="month">Este mes</option><option value="year">Este año</option><option value="all">Todo</option><option value="custom">Rango personalizado</option></select></div><div class="toolbar-actions"><button class="primary-button" id="export-button">⇩ Preparar Excel</button><a class="secondary-button" href="/api/backup" download>Descargar copia privada</a></div></section>
+          <section class="settings-section" data-settings-panel="seguridad"><div class="settings-heading"><div><p class="eyebrow">Acceso</p><h2>Seguridad</h2></div></div><div class="setting-row"><div><strong>Email y contraseña</strong><p id="security-email">Tu cuenta de acceso</p></div><button class="secondary-button" id="change-password-button">Cambiar contraseña</button></div><div class="setting-row"><div><strong>Cuenta de Google</strong><p>Acceso alternativo si lo has configurado.</p></div><span class="status-pill"><i></i> Disponible</span></div><div class="setting-row"><div><strong>Base de datos privada</strong><p>Tus datos están protegidos en Supabase.</p></div><span class="status-pill"><i></i> Activa</span></div></section>
+        </div></div>
+      </section>
+    </main>
+
+    <nav class="mobile-nav" aria-label="Navegación móvil"><button class="active" data-view="inicio"><span>⌂</span>Inicio</button><button data-view="ventas"><span>↗</span>Ventas</button><button class="mobile-add" data-open-drawer="sale" aria-label="Nueva venta">＋</button><button data-view="gastos"><span>↙</span>Gastos</button><button data-view="estadisticas"><span>▥</span>Datos</button></nav>
+  </div>
+
+  <div class="notification-popover" id="notification-popover"><div class="section-heading"><h3>Notificaciones</h3><button class="icon-button" id="close-notifications">×</button></div><div class="notification-item warning-note"><span>!</span><div><strong>Te acercas al límite de ropa</strong><p>Has utilizado el 86% del presupuesto mensual.</p></div></div><div class="notification-item"><span>↻</span><div><strong>Suscripción por confirmar</strong><p>Adobe Creative Cloud · 66,55 €</p></div></div><div class="notification-item"><span>↗</span><div><strong>Segundo pago próximo</strong><p>La Terraza · vence el 3 de julio.</p></div></div></div>
+  <div class="drawer-backdrop" id="drawer-backdrop"></div>
+  <aside class="drawer" id="drawer" aria-hidden="true"><div class="drawer-header"><div><p class="eyebrow" id="drawer-eyebrow">Nuevo movimiento</p><h2 id="drawer-title">Registrar venta</h2></div><button class="icon-button" id="close-drawer">×</button></div><div class="drawer-body" id="drawer-body"></div></aside>
+  <div class="toast" id="toast" role="status"></div>
+  <script src="config.js"></script>
+  <script src="supabase-api.js"></script>
+  <script src="advanced-api.js"></script>
+  <script src="app.js"></script>
+  <script src="live.js"></script>
+  <script src="advanced.js"></script>
+</body>
+</html>
