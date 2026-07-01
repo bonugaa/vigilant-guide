@@ -65,7 +65,7 @@ export default async function handler(request, response) {
       if (!cache.has(cacheKey)) cache.set(cacheKey, await workspaceAlerts(item.workspace_id, item.user_id, today));
       const alerts = cache.get(cacheKey);
       if (!alerts.length) continue;
-      await webpush.sendNotification({ endpoint: item.endpoint, keys: { p256dh: item.p256dh, auth: item.auth_key } }, JSON.stringify({ title: 'Clario · Avisos del día', body: alerts.join(' '), url: '/' }));
+      await webpush.sendNotification({ endpoint: item.endpoint, keys: { p256dh: item.p256dh, auth: item.auth_key } }, JSON.stringify({ title: 'Fiometra · Avisos del día', body: alerts.join(' '), url: '/' }));
       await rest('push_subscriptions', 'id=eq.' + item.id, { method: 'PATCH', body: JSON.stringify({ last_notified_on: today, updated_at: new Date().toISOString() }) });
       sent++;
     } catch (error) {
