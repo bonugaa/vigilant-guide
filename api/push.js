@@ -6,7 +6,10 @@ const SUPABASE_URL = String(process.env.SUPABASE_URL || '').replace(/\/$/, '');
 const SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
 function headers(extra = {}) {
-  return { apikey: SERVICE_KEY, Authorization: 'Bearer ' + SERVICE_KEY, 'Content-Type': 'application/json', ...extra };
+  const auth = SERVICE_KEY && !SERVICE_KEY.startsWith('sb_')
+    ? { Authorization: 'Bearer ' + SERVICE_KEY }
+    : {};
+  return { apikey: SERVICE_KEY, ...auth, 'Content-Type': 'application/json', ...extra };
 }
 async function rest(table, query = '', options = {}) {
   const response = await fetch(SUPABASE_URL + '/rest/v1/' + table + (query ? '?' + query : ''), { ...options, headers: headers(options.headers || {}) });
