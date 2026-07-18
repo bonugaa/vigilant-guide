@@ -3,7 +3,7 @@
   var config=window.CLARIO_CONFIG||{};
   if(config.mode!=='supabase')return;
   var originalFetch=window.fetch.bind(window);
-  var base=String(config.supabaseUrl||'').replace(/\/$/,'');
+  var base=String(config.supabaseUrl||'').trim().replace(/\/+$/,'').replace(/\/(?:rest|auth|storage|realtime)\/v1(?:\/.*)?$/i,'');
   var anon=config.supabaseAnonKey||'';
   var tokenKey='clario_supabase_session';
   function captureOAuth(){if(!location.hash)return;var p=new URLSearchParams(location.hash.slice(1));if(p.get('error_description'))localStorage.setItem('clario_auth_error',p.get('error_description'));if(p.get('access_token')){var expires=Number(p.get('expires_in')||3600);store({access_token:p.get('access_token'),refresh_token:p.get('refresh_token'),expires_in:expires,expires_at:Math.floor(Date.now()/1000)+expires,token_type:'bearer'});}history.replaceState(null,'',location.pathname+location.search);}
