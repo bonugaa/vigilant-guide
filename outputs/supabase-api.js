@@ -11,7 +11,7 @@
   function saved(){try{return JSON.parse(localStorage.getItem(tokenKey)||'null');}catch(e){return null;}}
   function store(value){if(value)localStorage.setItem(tokenKey,JSON.stringify(value));else localStorage.removeItem(tokenKey);}
   captureOAuth();
-  window.CLARIO_SUPABASE_AUTH={google:function(){location.href=base+'/auth/v1/authorize?provider=google&redirect_to='+encodeURIComponent(location.origin);}};
+  window.CLARIO_SUPABASE_AUTH={google:function(){var query='provider=google&redirect_to='+encodeURIComponent(location.origin)+'&apikey='+encodeURIComponent(anon);location.href=base+'/auth/v1/authorize?'+query;}};
   async function authCall(path,options){return originalFetch(base+'/auth/v1/'+path,Object.assign({},options||{},{headers:Object.assign({'apikey':anon,'Content-Type':'application/json'},options&&options.headers||{})}));}
   async function refresh(){var session=saved();if(!session)return null;if(session.expires_at&&session.expires_at*1000>Date.now()+60000)return session;if(!session.refresh_token){store(null);return null;}var response=await authCall('token?grant_type=refresh_token',{method:'POST',body:JSON.stringify({refresh_token:session.refresh_token})});if(!response.ok){store(null);return null;}session=await response.json();store(session);return session;}
   async function userSession(){var session=await refresh();if(!session)return null;var response=await authCall('user',{headers:{Authorization:'Bearer '+session.access_token}});if(!response.ok){store(null);return null;}var user=await response.json();session.user=user;store(session);return session;}
