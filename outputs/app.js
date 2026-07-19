@@ -29,10 +29,11 @@
 
   function calcSale(sale) {
     var paidBase = sale.base * sale.paid / 100;
-    var irpf = sale.irpf ? paidBase * 0.09 : 0;
+    var baseIrpf = sale.irpf ? paidBase * 0.09 : 0;
     var iva = sale.iva ? paidBase * 0.21 : 0;
     var extra = paidBase * (sale.extra || 0) / 100;
-    return { paidBase:paidBase, irpf:irpf, iva:iva, extra:extra, net:paidBase-irpf-extra, clientPaid:paidBase+iva-irpf-extra };
+    var irpf = baseIrpf + extra;
+    return { paidBase:paidBase, irpf:irpf, iva:iva, extra:extra, net:paidBase-irpf, clientPaid:paidBase+iva-irpf };
   }
   function totals() {
     var income = sales.reduce(function (sum, sale) { return sum + calcSale(sale).net; }, 0);
@@ -136,8 +137,8 @@
 
   function updateSaleCalculation() {
     var base=Number(document.getElementById('sale-base').value)||0; var paid=Number(document.getElementById('sale-paid').value)||0; var paidBase=base*paid/100;
-    var iva=document.getElementById('sale-iva').checked?paidBase*.21:0; var irpf=document.getElementById('sale-irpf').checked?paidBase*.09:0; var extra=paidBase*(Number(document.getElementById('sale-extra').value)||0)/100;
-    setText('calc-base',money.format(paidBase)); setText('calc-iva',money.format(iva)); setText('calc-irpf','−'+money.format(irpf)); setText('calc-client',money.format(paidBase+iva-irpf-extra)); setText('calc-net',money.format(paidBase-irpf-extra));
+    var iva=document.getElementById('sale-iva').checked?paidBase*.21:0; var baseIrpf=document.getElementById('sale-irpf').checked?paidBase*.09:0; var extra=paidBase*(Number(document.getElementById('sale-extra').value)||0)/100; var irpf=baseIrpf+extra;
+    setText('calc-base',money.format(paidBase)); setText('calc-iva',money.format(iva)); setText('calc-irpf','−'+money.format(irpf)); setText('calc-client',money.format(paidBase+iva-irpf)); setText('calc-net',money.format(paidBase-irpf));
   }
   function openDrawer(type,model) {
     setText('drawer-eyebrow',type==='sale'?'Cobro real':'Salida de dinero'); setText('drawer-title',type==='sale'?'Registrar venta':'Registrar gasto');
@@ -167,7 +168,6 @@
   document.getElementById('sale-model-button').addEventListener('click',function(){openDrawer('sale',true);});
   document.getElementById('confirm-recurring').addEventListener('click',function(){expenses.unshift({id:Date.now(),name:'Adobe Creative Cloud',category:'Suscripciones',type:'business',amount:66.55,date:'Hoy',method:'Tarjeta',deductible:true});document.querySelector('.recurring-band').style.display='none';renderAll();showToast('Pago recurrente confirmado.');});
   document.getElementById('skip-recurring').addEventListener('click',function(){document.querySelector('.recurring-band').style.display='none';showToast('Recordatorio omitido. No se ha restado nada.');});
-  ['new-client-button','new-goal-button','invite-button'].forEach(function(id){var el=document.getElementById(id);if(el)el.addEventListener('click',function(){showToast('Esta acción estará disponible en el siguiente prototipo.');});});
   document.getElementById('export-button').addEventListener('click',function(){showToast('Excel preparado con las secciones y fechas elegidas.');});
 
   var deferredInstall;

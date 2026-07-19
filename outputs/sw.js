@@ -1,4 +1,4 @@
-var CACHE='clario-v16';
+var CACHE='clario-v17';
 var FILES=['./','index.html','styles.css','config.js','supabase-api.js','advanced-api.js','app.js','live.js','advanced.js','manifest.webmanifest','app-icon.svg'];
 self.addEventListener('install',function(event){event.waitUntil(caches.open(CACHE).then(function(cache){return cache.addAll(FILES);}).then(function(){return self.skipWaiting();}));});
 self.addEventListener('activate',function(event){event.waitUntil(caches.keys().then(function(keys){return Promise.all(keys.filter(function(key){return key!==CACHE;}).map(function(key){return caches.delete(key);}));}).then(function(){return self.clients.claim();}));});
